@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阊门水关公园广场 · 廊亭构筑 商业界面优化建议（精简讲述版）</title>
+<style>
+  :root{
+    --ink:#26221d; --ink2:#4a443c; --ink3:#837a6d;
+    --paper:#f8f5ef; --paper2:#f2ece0; --card:#fffdf8;
+    --zhu:#9c3b2e; --zhu2:#b5503c;
+    --qing:#4a5f5b; --line:#ded5c4; --line2:#eae3d4;
+    --hei:"猫啃什锦黑","Maoken Shijinhei","PingFang SC","Microsoft YaHei","Heiti SC",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--paper); color:var(--ink2);
+    font-family:"Songti SC","Source Han Serif SC","Noto Serif CJK SC",STSong,SimSun,"宋体",serif;
+    font-size:16.5px; line-height:2.0; -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.55;
+    background:
+      radial-gradient(1200px 600px at 12% -8%, #fffdf6 0%, rgba(255,253,246,0) 60%),
+      radial-gradient(900px 500px at 100% 100%, #f3ecdd 0%, rgba(243,236,221,0) 55%);
+  }
+  .progress{position:fixed; top:0; left:0; height:2px; width:0; background:var(--zhu); z-index:60; transition:width .1s linear}
+
+  /* ---------- 封面 ---------- */
+  .cover{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:56px 40px 36px}
+  .cover-inner{display:flex; gap:56px; align-items:flex-start; border-bottom:1px solid var(--line); padding-bottom:40px}
+  .cover-left{flex:0 0 auto; display:flex; gap:22px}
+  .cover-title{
+    writing-mode:vertical-rl; text-orientation:upright; letter-spacing:.16em;
+    font-size:34px; line-height:1.5; color:var(--ink); font-weight:700; margin:0;
+    font-family:"STZhongsong"," Songti SC","Source Han Serif SC",STSong,SimSun,serif;
+  }
+  .cover-title small{font-size:17px; font-weight:400; color:var(--ink3); letter-spacing:.3em; margin-right:14px}
+  .cover-sub{
+    writing-mode:vertical-rl; text-orientation:upright; font-size:13.5px; letter-spacing:.34em;
+    color:var(--ink3); margin-top:2.9em; line-height:1.6;
+  }
+  .rule-v{width:1px; background:var(--line); align-self:stretch; margin-top:6px}
+  .cover-right{flex:1 1 auto; padding-top:8px}
+  .kicker{font-size:12px; letter-spacing:.42em; color:var(--zhu); margin:0 0 18px}
+  .cover-right h2{font-size:25px; line-height:1.65; color:var(--ink); margin:0 0 14px; font-weight:700}
+  .cover-right h3{font-size:15px; line-height:1.9; color:var(--ink3); font-weight:400; margin:0 0 26px}
+  .meta{display:flex; flex-wrap:wrap; gap:10px 30px; font-size:13.5px; color:var(--ink3); letter-spacing:.06em}
+  .meta b{color:var(--ink2); font-weight:400}
+
+  /* 摘要 */
+  .abstract{
+    position:relative; z-index:1; max-width:1180px; margin:0 auto 10px; padding:0 40px;
+  }
+  .abstract div{
+    border:1px solid var(--line); background:var(--card); padding:26px 30px; position:relative;
+  }
+  .abstract div::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--zhu)}
+  .abstract .lbl{font-size:12px; letter-spacing:.34em; color:var(--zhu); display:block; margin-bottom:10px}
+  .abstract p{margin:0; font-size:15.5px; line-height:2.05; color:var(--ink2); text-indent:0}
+  .abstract p+p{margin-top:10px}
+
+  /* ---------- 布局 ---------- */
+  .layout{
+    position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 40px 80px;
+    display:grid; grid-template-columns:minmax(0,1fr) 212px; gap:60px; align-items:start;
+  }
+  main{min-width:0; grid-column:1; grid-row:1}
+
+  /* ---------- 侧栏目录 ---------- */
+  .toc-side{position:sticky; top:34px; align-self:start; padding-top:34px; grid-column:2; grid-row:1}
+  .toc-side .t{font-size:11px; letter-spacing:.36em; color:var(--ink3); margin-bottom:14px}
+  .toc-side a{
+    display:block; font-size:13px; line-height:1.55; color:var(--ink3); text-decoration:none;
+    padding:5px 0 5px 12px; border-left:2px solid transparent; transition:.2s;
+  }
+  .toc-side a:hover{color:var(--zhu)}
+  .toc-side a.on{color:var(--zhu); border-left-color:var(--zhu); font-weight:700}
+  .toc-side a.sub{font-size:12.2px; padding-left:24px; color:#9a9184}
+
+  /* ---------- 章节 ---------- */
+  section{scroll-margin-top:26px}
+  .sec{padding-top:52px}
+  .sec-h{display:flex; align-items:baseline; gap:16px; margin:0 0 8px}
+  .sec-h .no{
+    font-size:13px; letter-spacing:.2em; color:var(--zhu); flex:0 0 auto;
+    border:1px solid var(--zhu); padding:1px 8px; line-height:1.7; border-radius:1px;
+  }
+  .sec-h h2{
+    font-size:23px; margin:0; color:var(--ink); font-weight:700; letter-spacing:.04em;
+    font-family:"STZhongsong","Songti SC","Source Han Serif SC",STSong,SimSun,serif;
+  }
+  .sec-sub{font-size:13px; color:var(--ink3); letter-spacing:.1em; margin:6px 0 26px; padding-left:2px}
+  h3.sub-h{font-size:17px; color:var(--ink); margin:34px 0 12px; font-weight:700; letter-spacing:.03em}
+  h3.sub-h span{color:var(--zhu); font-size:13px; margin-right:10px; letter-spacing:.1em}
+  p{text-indent:2em; margin:0 0 14px}
+  .noli{text-indent:0}
+
+  blockquote{
+    margin:26px 0; padding:4px 0 4px 22px; border-left:2px solid var(--qing);
+    font-family:"Kaiti SC",KaiTi,STKaiti,serif; font-size:16.5px; color:var(--qing); line-height:2.05;
+  }
+  blockquote p{text-indent:0; margin:0}
+  blockquote cite{display:block; font-style:normal; font-size:12.5px; color:var(--ink3); margin-top:8px; letter-spacing:.08em}
+
+  .lead{font-size:17px; color:var(--ink); line-height:2.0}
+
+  /* ---------- 表格 ---------- */
+  .tbl-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:18px 0 22px}
+  table{border-collapse:collapse; width:100%; font-size:13.6px; line-height:1.85; font-family:inherit}
+  th,td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top}
+  th{background:var(--paper2); color:var(--ink); font-weight:700; letter-spacing:.04em; white-space:nowrap}
+  td{color:var(--ink2)}
+  td b{color:var(--ink); font-weight:700}
+  tr:nth-child(even) td{background:#fdfaf3}
+  .tbl-cap{font-size:12.5px; color:var(--ink3); letter-spacing:.08em; margin:-12px 0 22px}
+
+  /* ---------- 图版 ---------- */
+  figure{margin:26px 0}
+  figure img{width:100%; display:block; border:1px solid var(--line); padding:5px; background:#fff}
+  figcaption{
+    font-size:12.5px; color:var(--ink3); text-align:center; line-height:1.8;
+    margin-top:9px; letter-spacing:.03em;
+  }
+  figcaption b{color:var(--zhu); font-weight:400}
+  .fig2{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:26px 0}
+  .fig2 figure{margin:0}
+
+  /* ---------- 建议卡 ---------- */
+  .advice{
+    background:var(--card); border:1px solid var(--line); padding:32px 34px 26px;
+    margin:30px 0 34px; position:relative;
+  }
+  .advice::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--zhu)}
+  .advice-h{display:flex; align-items:baseline; gap:14px; margin:0 0 4px; flex-wrap:wrap}
+  .advice-h .num{
+    font-size:12px; letter-spacing:.18em; color:#fff; background:var(--zhu);
+    padding:2px 9px; line-height:1.7;
+  }
+  .advice-h h3{
+    font-size:20px; margin:0; color:var(--ink); font-weight:700; letter-spacing:.05em;
+    font-family:"STZhongsong","Songti SC","Source Han Serif SC",STSong,SimSun,serif;
+  }
+  .advice-h .pos{font-size:13.5px; color:var(--zhu); letter-spacing:.06em}
+  .blk{margin:20px 0 0}
+  .blk .tag{
+    display:inline-block; font-size:12px; letter-spacing:.24em; color:var(--zhu);
+    border-bottom:1px solid rgba(156,59,46,.28); padding-bottom:2px; margin-bottom:10px;
+  }
+  .blk p,.blk li{font-size:15.2px; line-height:1.98}
+  .blk ul{margin:6px 0 0; padding-left:1.2em}
+  .blk li{margin-bottom:7px; text-indent:0}
+  .blk li b{color:var(--ink); font-weight:700}
+  .blk td,.blk th{font-size:13.4px}
+
+  .note{
+    border:1px dashed #d8c9b0; background:#fbf6ea; padding:16px 20px; margin:22px 0;
+    font-size:14.2px; line-height:1.95; color:var(--ink2);
+  }
+  .note b{color:var(--zhu); font-weight:700}
+  .note p{text-indent:0; margin:0}
+  .note p+p{margin-top:8px}
+
+  .kw{color:var(--zhu); font-weight:700}
+
+  /* ---------- 浮钮 ---------- */
+  .fab{
+    position:fixed; z-index:50; border:1px solid var(--line); background:rgba(255,253,248,.96);
+    color:var(--ink2); cursor:pointer; font-family:inherit; letter-spacing:.14em;
+    box-shadow:0 6px 22px rgba(90,70,40,.09); transition:.22s;
+  }
+  .fab:hover{color:var(--zhu); border-color:var(--zhu)}
+  .toc-fab{
+    right:20px; bottom:20px; font-size:13px; padding:11px 15px; display:none;
+  }
+  .top-fab{
+    right:20px; bottom:70px; width:40px; height:40px; font-size:16px;
+    opacity:0; pointer-events:none; display:flex; align-items:center; justify-content:center; padding:0;
+  }
+  .top-fab.on{opacity:1; pointer-events:auto}
+
+  /* 手机目录面板 */
+  .toc-panel{
+    position:fixed; z-index:55; right:16px; bottom:76px; width:min(78vw,290px);
+    background:rgba(255,253,248,.99); border:1px solid var(--line); padding:18px 20px 14px;
+    box-shadow:0 18px 46px rgba(90,70,40,.16); display:none;
+  }
+  .toc-panel.on{display:block}
+  .toc-panel a{display:block; font-size:13.5px; color:var(--ink2); text-decoration:none; padding:6px 0; border-bottom:1px dotted var(--line2)}
+  .toc-panel a:last-child{border-bottom:0}
+  .toc-panel a:hover{color:var(--zhu)}
+
+  footer{
+    position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:34px 40px 60px;
+    border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3); line-height:2; letter-spacing:.04em;
+  }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width:1100px){
+    .layout{grid-template-columns:1fr; gap:0; padding:0 24px 70px}
+    .toc-side{display:none}
+    .toc-fab{display:block}
+    .cover,.abstract,footer{padding-left:24px; padding-right:24px}
+    .cover-inner{gap:26px}
+    .cover-title{font-size:26px}
+  }
+  @media (max-width:720px){
+    body{font-size:16px}
+    .cover-inner{display:block}
+    .cover-left{margin-bottom:24px}
+    .cover-title{writing-mode:horizontal-tb; font-size:26px; line-height:1.5}
+    .cover-sub{writing-mode:horizontal-tb; display:block; margin-top:12px; font-size:13px; letter-spacing:.3em}
+    .cover-title small{margin-right:0; margin-left:0}
+    .rule-v{display:none}
+    .cover-right h2{font-size:20px}
+    .advice{padding:24px 20px 20px}
+    .fig2{grid-template-columns:1fr}
+    .sec-h h2{font-size:19px}
+    table{min-width:560px}
+  }
+
+  /* ---------- 打印 ---------- */
+  @page{size:A4; margin:17mm 16mm}
+  @media print{
+    body{background:#fff; font-size:10.6pt; line-height:1.75}
+    body::before,.progress,.toc-side,.toc-fab,.top-fab,.toc-panel{display:none !important}
+    .layout{display:block; max-width:none; padding:0}
+    .cover,.abstract,footer{max-width:none; padding-left:0; padding-right:0}
+    .cover-title{writing-mode:vertical-rl; font-size:26pt}
+    .sec{padding-top:16pt; page-break-before:auto}
+    .advice,figure,.note,.tbl-wrap{page-break-inside:avoid}
+    h2,h3,.sec-h,.sec-sub{page-break-after:avoid; break-after:avoid-page}
+    .sec-h{page-break-inside:avoid; break-inside:avoid-page}
+    .blk.qa{page-break-inside:avoid; break-inside:avoid-page}
+    .advice.flow{page-break-inside:auto; break-inside:auto}
+    .blk .tag{display:block; page-break-after:avoid; break-after:avoid-page}
+    footer{padding-top:8pt; padding-bottom:0; break-inside:avoid}
+    #s1 .tbl-wrap{page-break-inside:auto; break-inside:auto}
+    #s1 table{page-break-inside:auto; break-inside:auto}
+    #s1 tr{page-break-inside:avoid; break-inside:avoid}
+    #s1 thead{display:table-header-group}
+    footer{margin-top:0; padding-top:3pt; padding-bottom:0; font-size:9.2pt; line-height:1.5; break-inside:avoid}
+    .advice .note{padding:10px 14px; margin:12px 0; line-height:1.65; font-size:10pt}
+    .advice th,.advice td{padding-top:7px; padding-bottom:7px}
+    table{font-size:9.4pt}
+    a{color:inherit; text-decoration:none}
+    figure img{border-color:#ccc}
+  }
+
+  /* ---------- 精简版：章节编号印章徽章 ---------- */
+  .sec-h{display:flex; align-items:center; gap:14px; margin:0 0 8px}
+  .sec-h .no{
+    font-family:"PingFang SC","Microsoft YaHei","Heiti SC",sans-serif;
+    font-size:15px; font-weight:700; color:#fff; letter-spacing:0;
+    flex:0 0 auto; width:30px; height:30px; border-radius:9px; line-height:1;
+    display:flex; align-items:center; justify-content:center; position:relative;
+    background:linear-gradient(135deg,var(--zhu2),var(--zhu));
+    box-shadow:0 2px 7px rgba(120,36,28,.30); border:0; padding:0;
+  }
+  .sec-h .no::after{content:""; position:absolute; inset:3px; border:1px solid rgba(255,255,255,.5); border-radius:6px}
+  @media (max-width:720px){ .sec-h .no{width:26px;height:26px;font-size:13px} }
+  @media print{ footer{font-size:11px; line-height:1.7; padding-top:6pt; margin-top:0} }
+
+  /* ========== 版式升级：标题黑体（猫啃什锦黑）＋ 版面节奏 ========== */
+  .cover-title{
+    font-family:var(--hei); font-size:32px; font-weight:400; letter-spacing:.08em;
+  }
+  .cover-right h2{ font-family:var(--hei); font-size:26px; font-weight:400; letter-spacing:.02em; line-height:1.55 }
+  .cover-right h3{ font-family:var(--hei); font-size:14px; font-weight:400; letter-spacing:.1em }
+  .kicker{ font-family:var(--hei); letter-spacing:.4em }
+  .sec-h h2{ font-family:var(--hei); font-size:25px; font-weight:400; letter-spacing:.02em }
+  .advice-h h3{ font-family:var(--hei); font-size:21px; font-weight:400; letter-spacing:.03em }
+  h3.sub-h{ font-family:var(--hei); font-size:17.5px; font-weight:400; letter-spacing:.02em }
+  .advice-h .num{ font-family:var(--hei); font-weight:400; font-size:11.5px; letter-spacing:.2em; padding:3px 9px 3px 11px; border-radius:2px }
+  .blk .tag{ font-family:var(--hei); letter-spacing:.26em }
+  .abstract .lbl{ font-family:var(--hei); letter-spacing:.3em }
+
+  /* 章节头：编号＋标题＋横线延伸，形成版面节奏 */
+  .sec-h{ gap:13px; margin:0 0 4px }
+  .sec-h::after{
+    content:""; flex:1 1 auto; align-self:center; margin-left:10px;
+    border-top:1px solid #d8cdb9;
+    -webkit-mask-image:linear-gradient(to right, #000 0%, #000 42%, rgba(0,0,0,0) 100%);
+    mask-image:linear-gradient(to right, #000 0%, #000 42%, rgba(0,0,0,0) 100%);
+  }
+  /* 章节副标题：朱红细竖线 */
+  .sec-sub{ padding-left:12px; border-left:2px solid rgba(156,59,46,.5); margin:10px 0 26px }
+
+  /* 症结小标题：朱红菱形索引点 */
+  h3.sub-h{ position:relative; padding-left:15px }
+  h3.sub-h::before{
+    content:""; position:absolute; left:1px; top:.66em; width:6px; height:6px;
+    background:var(--zhu); transform:rotate(45deg); opacity:.85;
+  }
+  h3.sub-h span{ font-family:var(--hei); font-size:12.5px; letter-spacing:.14em }
+
+  /* 建议卡：标题行右侧淡索引字，标题下一道细线，定位句独占一行 */
+  .advice{ padding:30px 34px 26px }
+  .advice-h{ align-items:center; padding-bottom:13px; border-bottom:1px solid var(--line2); margin-bottom:16px }
+  .advice-h .pos{
+    order:2; flex:1 0 100%; margin:7px 0 0; padding-left:2px;
+    font-size:13px; color:var(--zhu); opacity:.88; letter-spacing:.05em;
+  }
+  .advice-h .idx{
+    order:1; margin-left:auto; font-family:var(--hei); font-size:13px; letter-spacing:.18em;
+    color:#c7bba4; flex:0 0 auto;
+  }
+  .advice .blk:first-of-type{ margin-top:0 }
+
+  /* 封面：右下角朱红小印 */
+  .cover-inner{ position:relative }
+  .seal{
+    position:absolute; right:2px; bottom:14px; width:50px; height:50px;
+    background:linear-gradient(150deg,#ad4335,#8f3327); color:#fff;
+    font-family:var(--hei); font-size:15px; line-height:1.05;
+    display:flex; align-items:center; justify-content:center;
+    writing-mode:vertical-rl; text-orientation:upright; letter-spacing:.06em;
+    border-radius:3px; transform:rotate(-2.5deg); opacity:.93;
+    box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.32), 0 2px 7px rgba(140,50,38,.13);
+  }
+  @media (max-width:720px){ .seal{ width:42px; height:42px; font-size:13px; right:0 } }
+  @media (max-width:720px){
+    .meta{ display:block }
+    .meta span{ display:block; margin-bottom:4px; overflow-wrap:anywhere }
+    .cover-right{ min-width:0 }
+    .seal{ position:static; margin:14px 0 0 auto; transform:none; width:34px; height:34px; font-size:10px }
+  }
+  @media print{
+    .cover-title{ font-size:23pt }
+    .cover-right h2{ font-size:18pt }
+    .cover-right h3{ font-size:9.6pt }
+    .sec-h h2{ font-size:18pt }
+    .advice-h h3{ font-size:15pt }
+    h3.sub-h{ font-size:12.6pt }
+    .seal{ width:34px; height:34px; font-size:10px }
+    /* 单幅图收至 150mm 居中：保住画面分量，又减少整幅被推到下页造成的页尾大留白 */
+    figure > img{ max-width:147mm; margin-left:auto; margin-right:auto }
+    /* 卡片可自然跨页（避免孤页），但标题整块不拆、且必须跟着首段走 */
+    .advice{ page-break-inside:auto; break-inside:auto }
+    .advice-h{
+      page-break-inside:avoid; break-inside:avoid-page;
+      page-break-after:avoid; break-after:avoid-page;
+    }
+    .advice .blk:first-of-type{ page-break-before:avoid; break-before:avoid-page }
+    /* 段末「好处」整块不拆，避免页首只剩一行尾巴 */
+    .advice .blk:last-of-type{ page-break-inside:avoid; break-inside:avoid-page }
+    p{ orphans:2; widows:2 }
+  }
+
+  /* ---------- 篇末说明 ---------- */
+  .endnote{
+    margin:34px 0 4px; padding:20px 24px 18px;
+    background:#fbf8f1; border-left:3px solid rgba(156,59,46,.38);
+  }
+  .endnote .tag{
+    display:inline-block; font-size:12px; letter-spacing:.24em; color:var(--zhu);
+    font-family:var(--hei); padding-bottom:2px; margin-bottom:9px;
+    border-bottom:1px solid rgba(156,59,46,.28);
+  }
+  .endnote p{font-size:14.2px; line-height:1.95; color:var(--ink2); margin:0}
+  .endnote p+p{margin-top:7px}
+  @media print{
+    .endnote{page-break-inside:avoid; break-inside:avoid-page; margin-top:22pt; padding:12pt 16pt 10pt}
+    .endnote p{font-size:10pt; line-height:1.72}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="pg"></div>
+
+<!-- ================= 封面 ================= -->
+<header class="cover">
+  <div class="cover-inner">
+    <div class="cover-left">
+      <h1 class="cover-title">阊门水关公园广场</h1>
+      <span class="cover-sub">廊亭构筑</span>
+      <div class="rule-v"></div>
+    </div>
+    <div class="cover-right">
+      <p class="kicker">商 业 界 面 专 项</p>
+      <h2>廊亭构筑商业界面优化建议</h2>
+      <h3>—— 两套方案，三条症结，五条对策</h3>
+      <div class="meta">
+        <span>项目　<b>苏州阊门历史文化街区保护提升项目 — 阊门水关公园广场</b></span>
+        <span>版本　<b>精简讲述版 V1.5</b></span>
+        <span>日期　<b>2026.11.14</b></span>
+      </div>
+      <div class="seal">阊门</div>
+    </div>
+  </div>
+</header>
+
+<div class="abstract">
+  <div>
+    <span class="lbl">方 案 分 析</span>
+    <p>现有的两套方案，把房子的「骨相」都做对了：挑廊、山墙、竖招、幌子都一一提取出来，比例也克制；两案共用同一套主体结构，差别只在立面的「皮」。</p>
+    <p>但《姑苏繁华图》的繁华，一半发生在屋檐以外——染坊门口的彩绸、满街的红纸竖招、抬过街心的青布小轿、店前排开的长凳。这些「事」和「色」没搬过来，于是房子做对了，街市没做出来。</p>
+    <p>本版按三步讲：<b>两套方案怎么比</b>、<b>到底缺点啥</b>、<b>对应的五条对策</b>。五处做法全部可逆、不上人屋面、不增面积，属市政小品与立面做法，可按需分批实施。</p>
+  </div>
+</div>
+
+<div class="layout">
+
+  <div class="toc-side" id="tocSide">
+    <div class="t">目 录</div>
+    <a href="#s1">一　两套方案分析</a>
+    <a href="#s2">二　三条症结</a>
+    <a href="#s3">三　五条修改建议</a>
+    <a href="#a1" class="sub">建议一　彩练当风</a>
+    <a href="#a2" class="sub">建议二　满街红</a>
+    <a href="#a3" class="sub">建议三　衙役开道，抬轿入市</a>
+    <a href="#a4" class="sub">建议四　一角破局</a>
+    <a href="#a5" class="sub">建议五　贵客请坐</a>
+  </div>
+
+  <main>
+
+  <!-- ================= 一 · 两套方案分析 ================= -->
+  <section class="sec" id="s1">
+    <div class="sec-h"><span class="no">一</span><h2>两套方案分析</h2></div>
+    <p class="sec-sub">同一套主体结构，两种立面态度——差别不在房子，在「皮」的浓淡</p>
+
+    <div class="blk">
+      <span class="tag">名 词 界 定</span>
+      <p>「方案一／方案二」指原方案《2026.11.12 水关廊亭及新增造型树优化设计》中的两个比选版本，两案的主张如下：</p>
+      <ul style="padding-left:1.3em; margin:0 0 12px">
+        <li style="margin-bottom:7px"><b>优化方案一</b>（原方案 p11 起）——「溯源古画传统商铺形制，<b>利用现代手法转译</b>」：讲风貌协调、建筑形制与《姑苏繁华图》建筑组合关系的对应。</li>
+        <li><b>优化方案二</b>（原方案 p24 起）——「<b>完全复刻古画店铺形制</b>」：忠实还原传统招牌、幌子与店肆风貌，原汁原味呈现清代阊门市井氛围。</li>
+      </ul>
+      <p>两案<b>共用同一套主体结构</b>（均设二层休憩空间、外挂旋转楼梯，开窗对望阊门城墙与盛泽码头），差别只在<b>立面形制与还原程度</b>，并非两栋不同的房子。一句话概括：<b>两套方案把房子的骨相都做对了，分歧只在皮</b>。</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:112px">比较项</th><th>以方案一为底 · 古画元素做点状加法<br><span style="font-weight:400;font-size:12.5px;color:#9c3b2e">本 稿 采 用</span></th><th>方案二 · 整体完全复刻<br><span style="font-weight:400;font-size:12.5px;color:#837a6d">不 建 议 采 用</span></th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>体量与结构</b></td><td>不动。以现有主体结构为基础，仅改「三处立面＋两处外挂」</td><td>屋面组合加密，需重新复核闸站顶板荷载与柱脚反力</td></tr>
+          <tr><td><b>与居民限高</b></td><td>天然满足——中间开间不动，抱厦只做在南端</td><td>中间开间仍须压脊，「完全复刻」感打折</td></tr>
+          <tr><td><b>文物会「传统风貌」</b></td><td>通过界面、招幌、色彩达成，属「做法」层面的传统</td><td>形式最接近，但易被指「仿古过重」</td></tr>
+          <tr><td><b>可逆性</b></td><td>高——五条建议中四条为软性可拆件</td><td>低——屋面整体重做，一旦不满意难以退回</td></tr>
+          <tr><td><b>增量工程</b></td><td>三处立面做法＋两处外挂＋一座 12–18㎡ 抱厦</td><td>屋面整体重做，工程量与报批周期显著更大</td></tr>
+          <tr><td><b>内外协调</b></td><td>外壳克制，为当代业态与陈列留白</td><td>店外旧、店内新，反差明显；业态与橱窗受限</td></tr>
+          <tr><td><b>与评审意见</b></td><td>贴合「因地制宜、避免生搬硬套」</td><td>形式最接近，但易被指「生搬硬套」</td></tr>
+          <tr><td><b>结论</b></td><td><b>建议采用</b></td><td><b>建议不采用</b>；仅作比选说明留存</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl-cap">表 1　两套方案比较</div>
+
+    <div class="blk">
+      <span class="tag">评 估 结 论</span>
+      <p><b>建议以方案一的转译路子为底，方案二不建议采用。</b>方案二截取《姑苏繁华图》西中市一带一楼二楼错落的店面段落，形制本身有依据，但<b>仿古过重</b>——外壳做到清代原样，后续业态、店内装修、灯光与陈列必然是当代的，<b>「店外旧、店内新」的反差会互相拆台</b>，也把招商与橱窗的手脚捆住。规委会「因地制宜、避免生搬硬套」指向的，恰是方案一那种转译的路子。</p>
+      <p>道理说穿了很简单：<b>两案都把房子做对了，差别只在「皮」的浓淡；而街市的热闹，从来不靠房子。</b>所以本稿不动主体，只在立面与街面上做点状加法——五处各有画中出处，也都可撤可换。其中招、绸、轿随时可拆，长凳为固定式但可整体撤除；只有转角抱厦是「硬」的，而它恰在居民视线的夹角之外，是全稿风险最低的一处「硬」。</p>
+    </div>
+  </section>
+
+  <!-- ================= 二 · 三条症结 ================= -->
+  <section class="sec" id="s2">
+    <div class="sec-h"><span class="no">二</span><h2>为什么「看了总觉得缺点啥」</h2></div>
+    <p class="sec-sub">三条症结：两条在图纸上，一条在图纸以外</p>
+
+    <h3 class="sub-h"><span>症结一</span>只搬了「形」，没搬「事」</h3>
+    <p>现行方案把画里的挑廊、山墙、白粉墙、博封板、檐口、檐枋、竖招、幌子都提取出来了，符号是对的，比例也克制，做得其实挺扎实。但看下来仍然「静」。</p>
+    <p>原因不在画，在取法：<b>画里的热闹，一半发生在屋檐以外</b>——染坊门口高挑的竹架、随风翻卷的彩绸、两人抬过街心的青布小轿、府署前满墙的红纸报帖、店前一字排开的长凳与客商。这些「事」和「色」，我们一件都没搬过来。于是建筑做对了，街市没做出来。</p>
+
+    <h3 class="sub-h"><span>症结二</span>没有标志物，而标志物从来不是体量</h3>
+    <p>现在从广场望过去，房子本身做得挺好，但没有一个「一眼能认出来、值得举起手机」的东西。要造标志性，不必加高加大，只需给一样东西——在画里，那样东西是<b>红招、彩绸和轿子</b>。这三样都是软的、可换的、几乎不花钱的。</p>
+
+    <h3 class="sub-h"><span>症结三</span>只有空间，没有脚本</h3>
+    <p>规委会纪要已经明确要求「加强阊门广场的活动策划，充分发挥公共空间效能」。空间盖好了没人来、来了没事做，是最容易被否的一种「完成」。建议这次把<b>运营脚本和空间图纸一起交</b>——谁在这里、做什么、说什么话、拿到什么。</p>
+  </section>
+
+  <!-- ================= 三 · 五条修改建议 ================= -->
+  <section class="sec" id="s3">
+    <div class="sec-h"><span class="no">三</span><h2>五条修改建议</h2></div>
+    <p class="sec-sub">每条：古画依据 → 做法尺寸 → 好处；五处皆「画中取景、场中落位」，末两条视现场条件取舍</p>
+
+    <!-- ---------- 建议一 ---------- -->
+    <div class="advice" id="a1">
+      <div class="advice-h">
+        <span class="num">建议一</span>
+        <h3>彩练当风</h3>
+        <span class="pos">染坊彩绸晾布架 —— 给立面装一台「会动的机器」</span>
+      <span class="idx">壹</span></div>
+
+      <div class="blk">
+        <span class="tag">古 画 依 据</span>
+        <p>《姑苏繁华图》染坊、绸缎铺数段，门外皆以竹木斜撑挑出高架，绸布自横杆垂落及地，风起翻卷如浪，远望是一片流动的彩色。仇英《清明上河图》染坊一段画得最清楚：竹竿咬合成斜撑、麻绳十字绑扎，架上晾青、绿长布，架下设染缸、踹布石。关键在<b>不落地生根</b>——向墙、向檐借力，拆装极快，正合建控地带对临时设施的要求。</p>
+      </div>
+
+      <figure><img src="images/01_ranfang-caichou.jpg" alt="图版 1"><figcaption><b>图版 1</b>　清·徐扬《姑苏繁华图》染坊段：门外高架，彩绸随风翻卷</figcaption></figure>
+
+      <figure><img src="images/02_changchou-chuijiang.jpg" alt="图版 2"><figcaption><b>图版 2</b>　《姑苏繁华图》街市段：长绸自高处垂落，成为街面的「彩色幕布」</figcaption></figure>
+      <figure><img src="images/03_ranfang-zhugan.jpg" alt="图版 3"><figcaption><b>图版 3</b>　仇英《清明上河图》染坊：竹竿斜撑咬合、麻绳绑扎，架上晾青绿长布，架下有染缸、踹布石——这是本建议<strong>构造做法</strong>的直接依据</figcaption></figure>
+
+      <div class="blk">
+        <span class="tag">做 法 与 尺 寸</span>
+        <div class="tbl-wrap">
+          <table>
+            <tbody>
+              <tr><th style="width:104px">架高</th><td>横杆标高 <b>3.0–3.6m</b>，低于主屋脊（4.05–4.83m），不与居民二层窗视线冲突</td></tr>
+              <tr><th>绸幅</th><td>宽 0.6–0.9m、长 2.5–3.5m，一组 6–9 幅，幅距 0.15–0.25m；成组错落下垂，避免齐平如帘</td></tr>
+              <tr><th>主材</th><td>毛竹（去青、桐油浸）或防腐木仿竹，Φ60–80；<b>麻绳＋竹销绑扎，不用金属卡件</b>——视觉上「古」，也让节点本身成为看点</td></tr>
+              <tr><th>绸料</th><td>真丝绡／素绉缎／仿真丝；取画中青、豆绿、藕荷、绛、月白。<b>忌荧光色、忌高饱和、忌纯大红</b></td></tr>
+              <tr><th>抗风<br><span style="font-size:12px;color:#837a6d">关键</span></th><td>① 每幅下摆缝 150g 配重条；② 幅面每 1m 开 20mm 竖缝「泄风」，防止鼓成帆；③ 风力 ≥6 级收绸，写入运营手册并配风速预警；④ 架体与檐口抱箍处加橡胶垫，<b>不得在木构件上开孔</b></td></tr>
+              <tr><th>照明</th><td>横杆内侧藏 3000K 线性洗墙灯（低位、遮光角 &gt;60°），夜间绸面透光——这会是全场最出片的一处</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="blk">
+        <span class="tag">好 处</span>
+        <p>立面上等于装了一台「会动的机器」：晾晒即生产性展示，每周换一组色系，天然形成「一周一景」，是游客复访最便宜的理由。</p>
+      </div>
+    </div>
+
+    <!-- ---------- 建议二 ---------- -->
+    <div class="advice" id="a3">
+      <div class="advice-h">
+        <span class="num">建议二</span>
+        <h3>满街红</h3>
+        <span class="pos">道前街红招群 —— 用颜色造标志性</span>
+      <span class="idx">贰</span></div>
+
+      <div class="blk">
+        <span class="tag">古 画 依 据</span>
+        <p>《姑苏繁华图》道前街（苏州府署前）府试一段：牌坊悬「吴中天府」，沿街竞挂红纸竖招——三元斋、状元糕、三场名笔、状元考据，另有专营「考具」之铺。满街一色朱红，既是「金榜题名」的彩头，也是苏州「状元之乡」最直白的市井表情。<b>这一段是整卷辨识度最高的街段</b>——统一的颜色加统一的事件，且不动一寸墙体。</p>
+      </div>
+
+      <figure><img src="images/04_hongzhi-shuzhao.jpg" alt="图版 4"><figcaption><b>图版 4</b>　清·徐扬《姑苏繁华图》道前街府试段：「吴中天府」牌坊下，满街红纸竖招——三元斋、状元糕、三场名笔、状元考据，右下有专营「考具」之铺</figcaption></figure>
+
+      <div class="blk">
+        <span class="tag">形 制 与 尺 寸</span>
+        <div class="tbl-wrap">
+          <table>
+            <tbody>
+              <tr><th style="width:104px">竖招</th><td>0.28–0.35m 宽 × 1.2–1.6m 高；木框裱绢／纸，朱红底、墨字或泥金字，下端缀短流苏；铁挑杆＋双环悬挂，出墙 0.35–0.5m，可整块取下更换</td></tr>
+              <tr><th>横匾</th><td>1.6–2.4m 宽 × 0.35–0.45m 高，悬于抱厦檐下（「吴中天府」）</td></tr>
+              <tr><th>颜色</th><td>取<b>朱砂／绛红</b>，不用大红。与青灰城砖、白粉墙相配，才是「万绿丛中一点红」的画意；红色面积控制在立面总面积的 <b>10% 以内</b>，忌满铺</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="blk">
+        <span class="tag">可 直 接 落 地 的 八 块 招</span>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th style="width:120px">招名</th><th style="width:96px">形制</th><th>经营内容</th></tr></thead>
+            <tbody>
+              <tr><td><b>状元糕</b></td><td>竖招</td><td>现制糕团：定胜糕、方糕、薄荷糕、酒酿饼。蒸笼出笼的白汽，就是最好的招牌</td></tr>
+              <tr><td><b>三元斋</b></td><td>竖招</td><td>茶食糕点、苏式糖果；呼应三元坊「连中三元」</td></tr>
+              <tr><td><b>三场名笔</b></td><td>竖招</td><td>湖笔、徽墨、砚台、笺纸——文房四宝</td></tr>
+              <tr><td><b>状元考据</b></td><td>竖招</td><td>书籍、拓片、苏州状元史料、地方志</td></tr>
+              <tr><td><b>吴中天府</b></td><td>横匾</td><td>抱厦檐下主匾，点明「府署在兹」的地望</td></tr>
+              <tr><td><b>金榜题名</b></td><td>竖招</td><td>榜帖墙：游客写名、盖「及第」朱印、当场张贴</td></tr>
+              <tr><td><b>姑苏糕团</b></td><td>竖招</td><td>四时糕团：青团、撑腰糕、重阳糕、糖粥</td></tr>
+              <tr><td><b>及第</b></td><td>短招</td><td>印章、文创、伴手礼</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="blk">
+        <span class="tag">好 处</span>
+        <p>全部建议里试错成本最低的一项：不涉结构，属可更换饰面，八块招与挑杆随主体施工同步安装即可；先挂 4 块试效果，一周内可见反馈。现方案「阊门古味」这类当代命名可保留 2 块作「当代层」，其余让位给画中招——「状元糕」「三元斋」一听就懂，还能在画里指认得到。</p>
+      </div>
+    </div>
+
+    <!-- ---------- 建议三 ---------- -->
+    <div class="advice flow" id="a4">
+      <div class="advice-h">
+        <span class="num">建议三</span>
+        <h3>衙役开道，抬轿入市</h3>
+        <span class="pos">仪仗 ＋ 轿子 ＋ 可互动事件 —— 让街市「有事发生」</span>
+      <span class="idx">叁</span></div>
+
+      <div class="blk">
+        <span class="tag">古 画 依 据</span>
+        <p>《姑苏繁华图》沿河街市数段，均有二人抬青布小轿穿行街心；仇英《清明上河图》中亦有轿。更值得借的是<b>学士街—道前街一带的官府仪仗</b>：衙役前导，举「回避」「肃静」衔牌，鸣锣开道。<b>轿是画里唯一「会动的建筑」，牌与锣是唯一「会说话的秩序」</b>——两者合到一处，一条街就从「布景」变成「现场」。</p>
+        <p><span class="kw">图证待补</span>　衔牌一段依现场比对与画中印象，本次尚无截图可附；由文史组补录学士街／道前街仪仗段图版后再入索引，报送文本中先以文字说明，不冒充已有图证。</p>
+      </div>
+
+      <figure><img src="images/05_qingbu-xiaojiao.jpg" alt="图版 5"><figcaption><b>图版 5</b>　《姑苏繁华图》沿河街市：街心有二人抬青布小轿，两侧「布行」招林立，码头货担往来</figcaption></figure>
+
+      <figure><img src="images/06_liangceng-dianpu.jpg" alt="图版 6"><figcaption><b>图版 6</b>　《姑苏繁华图》街市段：两层店铺夹朱红竖招与旗幡，城墙、柳色映于街尾——可作「一店一幌、色彩相间」的立面节奏参考</figcaption></figure>
+
+      <div class="blk">
+        <span class="tag">做 法 与 尺 寸</span>
+        <div class="tbl-wrap">
+          <table>
+            <tbody>
+              <tr><th style="width:104px">轿厢</th><td>0.80 × 0.80 × 1.40m；轿顶起脊带翘角，青／蓝布罩，白铜包角</td></tr>
+              <tr><th>轿杆</th><td>长 3.2m，与轿厢可拆连接</td></tr>
+              <tr><th>重量</th><td>竹／藤骨架＋布罩，整重 <b>≤35kg</b>，可拆为两件，收纳于方案已有的「工具间」</td></tr>
+              <tr><th>安置</th><td>不落地生根、不设轨道，随时可抬可停</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="blk">
+        <span class="tag">一 套 仪 仗 · 两 种 配 置</span>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th style="width:100px">配置</th><th>人物与道具</th><th>做什么</th></tr></thead>
+            <tbody>
+              <tr><td><b>日常低配</b></td><td>轿子 1 顶＋轿夫 2 名；「回避」「肃静」衔牌与铜锣常设于店前作静态陈设</td><td>定点站岗、定时短巡；经培训的保安可着「号坎＋现代标识」在岗，让街面日常就有一点古意</td></tr>
+              <tr><td><b>节假日高配</b></td><td>衙役 2–4 名（衔牌、铜锣）＋轿夫 2 名＋轿子；红缨帽、号坎</td><td>「府试放榜／官员巡街」小戏，节假日不定期上演，每次 10–15 分钟，不设固定场次</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="blk">
+        <span class="tag">运 营 要 点</span>
+        <p>巡游一律不载人，开放的是<b>定点「落轿入座」</b>——轿杆离肩、轿底落于平整铺装加防滑支垫，全程静止不位移，风险等级接近「坐一把椅子」。坐轿<b>不收费</b>，用互动换资格：答题、寻招、认色可得「银票」，凭 1 张券兑一次入座（每人限一次），余票可换糕团或榜帖。<b>不设现金、不设扫码付费，不是经营收费项目</b>，也不参与兑换一样能逛完。互动点靠「固定岗＋兼岗＋无人点」铺开密度，<b>不新增编制</b>：答题由衙役、认色由商户店员兼任，自助印章台无人值守。三题只出<b>二选一封闭题</b>，答不出给提示、蒙对也算，目的是让人开口、停下、合影，不是把人考住。</p>
+      </div>
+
+      <div class="blk">
+        <span class="tag">好 处</span>
+        <p>成本最低、传播最快：一顶轿子走上广场，当天就有短视频；加上衙役与衔牌，短视频才有情节。而「凭自己挣来的票坐一回轿」，让游客从看客变成主角——这一层，是单靠装修做不出来的。</p>
+      </div>
+    </div>
+
+    <!-- ---------- 建议四 ---------- -->
+    <div class="advice" id="a2">
+      <div class="advice-h">
+        <span class="num">建议四</span>
+        <h3>一角破局</h3>
+        <span class="pos">转角抱厦 · 歇山顶 —— 给店铺一个「正脸」</span>
+      <span class="idx">肆</span></div>
+
+      <div class="note">
+        <p><b>可做性</b>　本条为「画中形制」的落地尝试，也是全稿唯一「硬」的一处：涉及转角结构、屋面搭接与居民视线，须结合现场实测复核后再定。若现场条件受限、体量与比例做不出协调美观的效果，<b>宁可留白，不必硬凹此造型</b>。</p>
+      </div>
+
+      <div class="blk">
+        <span class="tag">古 画 依 据</span>
+        <p>仇英《清明上河图》街角一段（图版 7 红圈处）：街角不做「侧墙对路口」，而是在转角另起一座短脊小顶，脊线与主屋脱开，屋面向街心压低，山面朝内、檐面朝外——等于在转角「补」出一个正面，檐下即敞开柜台，客人站在街面上挑选。<b>转角是最贵的位置，不能拿山墙应付</b>；现方案两端恰以山墙面对广场台阶，等于把「背面」给了人流最密的方向。</p>
+      </div>
+
+      <figure><img src="images/07_zhuanjiao-xiaoding.jpg" alt="图版 7"><figcaption><b>图版 7</b>　仇英《清明上河图》街角段（红圈）：转角另起短脊小顶，屋面向街心压低，形成「正面」；檐下一排敞开柜台，货品悬挂陈列——与今天的买手店并无割裂</figcaption></figure>
+
+      <div class="blk">
+        <span class="tag">做 法 与 尺 寸</span>
+        <div class="tbl-wrap">
+          <table>
+            <tbody>
+              <tr><th style="width:104px">屋面</th><td>歇山（或悬山加博风板、山花）；脊高比主屋脊低 0.6–0.8m，形成主次；檐口标高控制在 <b>3.2–3.4m</b></td></tr>
+              <tr><th>柱</th><td>木柱 Φ150–180，两根，落于台阶侧石或加宽的花箱基座；<b>避让闸站顶板 12.5kN/m² 区</b></td></tr>
+              <tr><th>柜台</th><td>檐下三面敞开柜台：柜面高 0.85–0.90m、深 0.60m，柜下暗柜储物；柜上设可调层板与挂杆，货品「悬、挂、列」三种陈列并用</td></tr>
+              <tr><th>色彩</th><td>随主屋——小青瓦、栗壳色木构、白粉墙，不加彩画；抱厦只靠「形」与「位」出彩，不靠装饰</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="blk">
+        <span class="tag">好 处</span>
+        <p>抱厦本身即「打卡机位」，可把广场人流引向廊架两端，缓解「中间挤、两头空」。<b>须补一张视线校核</b>：以居民二层窗台为视点做 45° 剖面，确认抱厦脊线不进入视野中心，随方案一并报送。</p>
+      </div>
+
+    </div>
+
+    <!-- ---------- 建议五 ---------- -->
+    <div class="advice flow" id="a5">
+      <div class="advice-h">
+        <span class="num">建议五</span>
+        <h3>贵客请坐</h3>
+        <span class="pos">店前条凳与布凉棚 —— 把「路过」变成「请坐」</span>
+      <span class="idx">伍</span></div>
+
+      <div class="note">
+        <p><b>可做性</b>　条凳与布凉棚取自画中店前陈设，属可选件：若通行、消防或铺装条件不允许，可改为可移动的活动条凳，或只在节庆时临时摆出。<b>摆不出协调的场面，不必硬凑</b>。</p>
+      </div>
+
+      <div class="blk">
+        <span class="tag">古 画 依 据</span>
+        <p>画里店前，凡留得出空地的几乎都摆着条凳：《姑苏繁华图》市井段如此，仇英《清明上河图》书坊段更清楚——「集贤堂」凉棚下一列长凳，客商列坐闲谈，柜台临街敞开。它不只是家具，是店家给客人的位子；<b>画里没有「顾客」一词，可每家店门口都留了坐处</b>——门口有座，客人才算被「请」了进来。</p>
+      </div>
+
+      <figure><img src="images/08_jixiantang-tiaodeng.jpg" alt="图版 8"><figcaption><b>图版 8</b>　仇英《清明上河图》「集贤堂」书坊段：蓝布凉棚下长凳列坐、柜台临街敞开。此图虽题「清明上河」，所画实为明代苏州街市风物，正可用作本地依据</figcaption></figure>
+
+      <div class="blk">
+        <span class="tag">做 法 与 尺 寸</span>
+        <div class="tbl-wrap">
+          <table>
+            <tbody>
+              <tr><th style="width:104px">条凳</th><td>2.4–3.0m 长 × 0.40m 深 × 0.45m 高；<b>外观按画中条凳做足</b>——穿榫外露、倒角手摸圆润、不做高光漆。<b>材质不必拘泥全木</b>：内部骨架可用耐候钢／铝合金，坐面用防腐木或木塑，耐候耐污、免年年油漆</td></tr>
+              <tr><th>安置</th><td><b>固定式，不作日常移动</b>。以压重基座或夹固于既有花箱／台阶侧石实现稳固，配防滑垫调平——<b>不打孔、不穿透闸站顶板防水层</b>；整体可拆、可移走，仍属可逆做法</td></tr>
+              <tr><th>布凉棚<br><span style="font-size:12px;color:#837a6d">可选</span></th><td>蓝／青布，竹竿斜撑，取画中「蓝布篷」色；与彩绸架同构，共用绑扎做法，一套工法两处用</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="blk">
+        <span class="tag">好 处</span>
+        <p>一条凳子确实改变不了什么结果——它不多卖一件货，也不一定多留人二十分钟。但它改的是关系的起点：<b>门口有座，路人才敢停；坐得下来，才谈得上搭话、看货、成交。</b></p>
+        <p>更要紧的是，它把「服务」落在了看得见的地方。今天讲客户体验、讲「以客为先」，画里早就在做——一顶凉棚、一条板凳、一句「请坐」。<b>苏州人做生意从待客开始，这件事在画里就有据可指</b>，也是可以讲给游客听的一句话。</p>
+      </div>
+
+    </div>
+
+    <div class="endnote">
+      <span class="tag">说 明</span>
+      <p>以上五条，是我们从画里找出的一些有趣元素；提这些建议，只为多提供一个看事情的角度。本稿把画里的依据、现场的条件、可以一试的做法摆在一处，供比对与取舍；至于最终怎么做、做哪几条、做到什么程度，仍以项目审定为准。</p>
+    </div>
+
+  </section>
+
+  </main>
+</div>
+
+<button class="toc-fab fab" id="tocFab">目 录</button>
+<button class="top-fab fab" id="topFab" title="返回顶部">↑</button>
+
+<div class="toc-panel" id="tocPanel">
+  <a href="#s1">一　两套方案分析</a>
+  <a href="#s2">二　三条症结</a>
+  <a href="#s3">三　五条修改建议</a>
+  <a href="#a1">建议一　彩练当风</a>
+  <a href="#a2">建议二　满街红</a>
+  <a href="#a3">建议三　衙役开道，抬轿入市</a>
+  <a href="#a4">建议四　一角破局</a>
+  <a href="#a5">建议五　贵客请坐</a>
+</div>
+
+<footer>
+  阊门水关公园广场 · 廊亭构筑商业界面优化建议（精简讲述版）　｜　2026.11.14<br>
+  本稿按「两套方案比较 → 三条症结 → 五条对策」三步讲，五处做法全部可逆、不上人屋面、不增面积；图证取自《姑苏繁华图》《清明上河图》，不列造价、不提工期。
+</footer>
+
+<script>
+(function(){
+  var pg = document.getElementById('pg');
+  var topFab = document.getElementById('topFab');
+  var tocFab = document.getElementById('tocFab');
+  var panel = document.getElementById('tocPanel');
+  var links = [].slice.call(document.querySelectorAll('#tocSide a'));
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+
+  function onScroll(){
+    var h = document.documentElement;
+    var sc = h.scrollTop || document.body.scrollTop;
+    var max = h.scrollHeight - h.clientHeight;
+    pg.style.width = (max > 0 ? (sc / max * 100) : 0) + '%';
+    if (sc > 520) { topFab.classList.add('on'); } else { topFab.classList.remove('on'); }
+
+    var idx = 0;
+    for (var i = 0; i < sections.length; i++){
+      if (sections[i].getBoundingClientRect().top <= 140) idx = i;
+    }
+    links.forEach(function(a,i){ a.classList.toggle('on', i === idx); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  topFab.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  tocFab.addEventListener('click', function(e){ e.stopPropagation(); panel.classList.toggle('on'); });
+  panel.addEventListener('click', function(e){
+    if (e.target.tagName === 'A') panel.classList.remove('on');
+  });
+  document.addEventListener('click', function(e){
+    if (!panel.contains(e.target) && e.target !== tocFab) panel.classList.remove('on');
+  });
+})();
+</script>
+</body>
+</html>
