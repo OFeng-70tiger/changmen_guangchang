@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f8f5ef">
+<meta name="description" content="阊门水关公园广场·廊亭构筑商业界面优化建议：两套方案比较、三条症结、五条对策，手机图片版。">
+<title>阊门水关公园广场 · 廊亭商业界面优化建议（手机版）</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;background:#efe9dd}
+body{margin:0;background:#f4efe6;color:#2a2318;
+  font:400 15.5px/1.75 "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+a{color:inherit;text-decoration:none}
+.rd{font-family:"Songti SC","Noto Serif CJK SC","Source Han Serif SC",Georgia,serif}
+
+/* ---- 顶部 ---- */
+.top{padding:26px 20px 20px;background:#f8f5ef;border-bottom:1px solid #e6ddcc}
+.kick{font:400 12.5px/1 "Songti SC",serif;letter-spacing:.24em;color:#9c3b2e}
+h1{margin:11px 0 0;font:400 27px/1.34 "Songti SC","Noto Serif CJK SC",serif;letter-spacing:.02em}
+.sub{margin:9px 0 0;font-size:14px;color:#5f574a;letter-spacing:.04em}
+.meta{margin:12px 0 0;font-size:12.4px;color:#837a6d;letter-spacing:.05em}
+.hint{position:relative;margin:14px 0 0;padding:9px 34px 9px 12px;border-radius:9px;
+  background:#fdf6e9;border:1px solid #ecdfc6;font-size:12.8px;line-height:1.62;color:#7a6a4e}
+.hint b{color:#9c3b2e;font-weight:400}
+.hint button{position:absolute;right:4px;top:2px;width:30px;height:30px;border:none;
+  background:none;color:#a3906f;font-size:17px;line-height:1;cursor:pointer}
+
+/* ---- 区块通用 ---- */
+.sec{background:#f8f5ef;padding:24px 18px 22px}
+.sec+.sec{border-top:8px solid #efe9dd}
+.shd{display:flex;align-items:baseline;gap:9px;margin-bottom:14px}
+.shd i{font:400 15px/1 "Songti SC",serif;color:#9c3b2e;letter-spacing:.1em;font-style:normal}
+.shd h2{margin:0;font:400 19px/1.3 "Songti SC",serif;letter-spacing:.06em}
+.shd span{margin-left:auto;font-size:11.6px;color:#8d8375}
+
+/* ---- 目录：四个大条目 ---- */
+.toc1{display:flex;align-items:center;gap:12px;padding:13px 13px;margin-bottom:8px;
+  background:#fffdf8;border:1px solid #e6ddcc;border-radius:11px}
+.toc1 b{flex:0 0 26px;height:26px;display:flex;align-items:center;justify-content:center;
+  border-radius:6px;background:#f3e7d7;color:#9c3b2e;font:400 14px/1 "Songti SC",serif}
+.toc1 .tt{flex:1 1 auto;min-width:0}
+.toc1 em{display:block;font-style:normal;font-size:15.2px;letter-spacing:.02em}
+.toc1 i{display:block;font-style:normal;font-size:11.8px;color:#8d8375;margin-top:2px}
+.toc1 .p{flex:0 0 auto;font:400 11.8px/1 "Songti SC",serif;color:#9c3b2e}
+/* 子目录：紧贴在「叁 五条修改建议」下方，左侧细引线 */
+.toc2{margin:0 0 10px 25px;padding:2px 0 2px 14px;border-left:2px solid #e7ddca}
+.toc2 a{display:flex;align-items:baseline;gap:8px;padding:7px 14px 7px 2px;border-bottom:1px dashed #ebe3d4;
+  font-size:13.2px;letter-spacing:.01em}
+.toc2 a:last-child{border-bottom:none}
+.toc2 a span{flex:1 1 auto;color:#5f574a}
+.toc2 a .p{flex:0 0 auto;font:400 11.2px/1 "Songti SC",serif;color:#9c3b2e}
+
+/* ---- 图片流 ---- */
+.flow{background:#efe9dd}
+figure.pg{margin:0;padding:0;line-height:0;scroll-margin-top:0;background:#f8f5ef}
+figure.pg img{display:block;width:100%;height:auto}
+.pgno{display:none}
+.bar{display:flex;align-items:center;justify-content:space-between;height:31px;padding:0 14px;
+  background:#efe9dd;border-top:1px solid #e4dccb;border-bottom:1px solid #e4dccb}
+.bar .t{font:400 11.4px/1 "Songti SC",serif;color:#8d8375;letter-spacing:.04em}
+.bar a{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:999px;
+  border:1px solid rgba(156,59,46,.34);color:#9c3b2e;background:rgba(255,253,248,.7);
+  font:400 11.4px/1 "Songti SC",serif;letter-spacing:.06em}
+
+/* ---- 古画索引 ---- */
+.ref p{margin:0 0 12px;font-size:14.6px;line-height:1.86;color:#3d362b}
+.gr{display:block;padding:12px 13px;margin-bottom:8px;background:#fffdf8;
+  border:1px solid #e6ddcc;border-radius:11px}
+.gr b{display:block;font-size:14.8px;font-weight:400;letter-spacing:.01em}
+.gr i{display:block;font-style:normal;font-size:11.8px;color:#8d8375;margin-top:3px}
+.gr .d{display:block;font-size:12.8px;line-height:1.7;color:#6b6255;margin-top:6px}
+.gr .p{display:block;margin-top:7px;font:400 11.4px/1 "Songti SC",serif;color:#9c3b2e}
+
+/* ---- 尾部 ---- */
+.foot{padding:22px 20px 40px;background:#f8f5ef;border-top:8px solid #efe9dd;
+  font-size:11.8px;line-height:1.9;color:#8d8375}
+.foot a{display:inline-flex;align-items:center;gap:5px;margin-bottom:12px;padding:7px 14px;
+  border-radius:999px;border:1px solid rgba(156,59,46,.36);color:#9c3b2e;font-size:12.6px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="kick">阊门水关公园广场</div>
+  <h1>廊亭构筑商业界面<br>优化建议</h1>
+  <p class="sub">两套方案 · 三条症结 · 五条对策</p>
+  <div class="meta">精简讲述版 V1.5　·　2026.11.14　·　全稿 18 页</div>
+  <p class="hint" id="hint">竖屏整页浏览，<b>横屏字更大</b><br>点任意一页，可看该页原图<button id="hx" aria-label="关闭提示">&times;</button></p>
+</header>
+<section class="sec" id="toc">
+  <div class="shd"><i>目</i><h2>目录</h2><span>点条目直接翻到那一页</span></div>
+  <a class="toc1" href="#g03"><b>壹</b><span class="tt"><em>两套方案分析</em><i>名词界定 · 表 1 逐项比较</i></span><span class="p">P.03</span></a>
+  <a class="toc1" href="#g04"><b>贰</b><span class="tt"><em>三条症结</em><i>形与事 · 标志物 · 脚本</i></span><span class="p">P.04</span></a>
+  <a class="toc1" href="#g05" style="margin-bottom:0"><b>叁</b><span class="tt"><em>五条修改建议</em><i>每条：古画依据 → 做法尺寸 → 好处</i></span><span class="p">P.05</span></a>
+  <div class="toc2">
+    <a href="#g05"><span>建议一 · 彩练当风</span><span class="p">P.05</span></a>
+    <a href="#g08"><span>建议二 · 满街红</span><span class="p">P.08</span></a>
+    <a href="#g11"><span>建议三 · 衙役开道，抬轿入市</span><span class="p">P.11</span></a>
+    <a href="#g14"><span>建议四 · 一角破局</span><span class="p">P.14</span></a>
+    <a href="#g16"><span>建议五 · 贵客请坐</span><span class="p">P.16</span></a>
+  </div>
+  <a class="toc1" href="#ref"><b>附</b><span class="tt"><em>说明与古画索引</em><i>八幅片段，逐张标注出处</i></span><span class="p">P.18</span></a>
+</section>
+<section class="flow" id="flow">
+<figure class="pg" id="g01"><a href="img/p01.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p01.webp" type="image/webp"><img src="img/p01.jpg" alt="封面：阊门水关公园广场 · 廊亭构筑商业界面优化建议" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.01　封面 · 阊门水关公园广场</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g03"><a href="img/p03.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p03.webp" type="image/webp"><img src="img/p03.jpg" alt="P.03 两套方案分析：名词界定与表 1 逐项比较" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.03　两套方案分析</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g04"><a href="img/p04.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p04.webp" type="image/webp"><img src="img/p04.jpg" alt="P.04 为什么「看了总觉得缺点啥」：三条症结" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.04　三条症结</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g05"><a href="img/p05.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p05.webp" type="image/webp"><img src="img/p05.jpg" alt="P.05 建议一 彩练当风：古画依据（图版 1 染坊彩绸晾布架）" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.05　建议一 · 彩练当风</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g06"><a href="img/p06.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p06.webp" type="image/webp"><img src="img/p06.jpg" alt="P.06 建议一 彩练当风：图版 2 长绸垂落" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.06　建议一 · 彩练当风</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g07"><a href="img/p07.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p07.webp" type="image/webp"><img src="img/p07.jpg" alt="P.07 建议一 彩练当风：图版 3 染坊竹竿架" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.07　建议一 · 彩练当风</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g08"><a href="img/p08.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p08.webp" type="image/webp"><img src="img/p08.jpg" alt="P.08 建议二 满街红：图版 4 红纸竖招群" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.08　建议二 · 满街红</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g09"><a href="img/p09.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p09.webp" type="image/webp"><img src="img/p09.jpg" alt="P.09 建议二 满街红：八块可直接落地的招（一）" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.09　建议二 · 满街红</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g10"><a href="img/p10.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p10.webp" type="image/webp"><img src="img/p10.jpg" alt="P.10 建议二 满街红：八块可直接落地的招（二）" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.10　建议二 · 满街红</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g11"><a href="img/p11.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p11.webp" type="image/webp"><img src="img/p11.jpg" alt="P.11 建议三 衙役开道，抬轿入市：图版 5 青布小轿" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.11　建议三 · 衙役开道</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g12"><a href="img/p12.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p12.webp" type="image/webp"><img src="img/p12.jpg" alt="P.12 建议三 衙役开道：图版 6 两层店铺夹竖招" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.12　建议三 · 衙役开道</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g13"><a href="img/p13.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p13.webp" type="image/webp"><img src="img/p13.jpg" alt="P.13 建议三 衙役开道：一套仪仗两种配置与运营要点" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.13　建议三 · 衙役开道</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g14"><a href="img/p14.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p14.webp" type="image/webp"><img src="img/p14.jpg" alt="P.14 建议四 一角破局：图版 7 转角短脊小顶" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.14　建议四 · 一角破局</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g15"><a href="img/p15.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p15.webp" type="image/webp"><img src="img/p15.jpg" alt="P.15 建议四 一角破局：做法与尺寸、好处" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.15　建议四 · 一角破局</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g16"><a href="img/p16.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p16.webp" type="image/webp"><img src="img/p16.jpg" alt="P.16 建议五 贵客请坐：图版 8 绸缎铺店顾客休息区" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.16　建议五 · 贵客请坐</span><a href="#toc">&uarr; 目录</a></div>
+<figure class="pg" id="g17"><a href="img/p17.jpg" target="_blank" rel="noopener"><picture><source srcset="img/p17.webp" type="image/webp"><img src="img/p17.jpg" alt="P.17 建议五 贵客请坐：做法与尺寸、好处" width="1800" height="1272" loading="lazy" decoding="async"></picture></a></figure><div class="bar"><span class="t">P.17　建议五 · 贵客请坐</span><a href="#toc">&uarr; 目录</a></div>
+</section>
+<section class="sec ref" id="ref">
+  <div class="shd"><i>附</i><h2>说明与古画索引</h2><span>点任意一条，翻到那一页原图</span></div>
+  <p>以上五条，是我们从画里找出的一些有趣元素；提这些建议，只为多提供一个看事情的角度。本稿把画里的依据、现场的条件、可以一试的做法摆在一处，供比对与取舍；至于最终怎么做、做哪几条、做到什么程度，仍以项目审定为准。</p>
+  <a class="gr" href="#g05"><b>图版 1 · 染坊彩绸晾布架</b><i>《姑苏繁华图》· 城外染坊段</i><span class="d">门外高架，彩绸随风翻卷——「彩练当风」的形制出处</span><span class="p">P.05</span></a>
+  <a class="gr" href="#g06"><b>图版 2 · 长绸垂落</b><i>《姑苏繁华图》· 街市段</i><span class="d">长绸自高处垂落，成为街面的「彩色幕布」</span><span class="p">P.06</span></a>
+  <a class="gr" href="#g07"><b>图版 3 · 染坊竹竿架</b><i>仇英《清明上河图》· 染坊</i><span class="d">竹竿斜撑咬合、麻绳绑扎，架下染缸与踹布石</span><span class="p">P.07</span></a>
+  <a class="gr" href="#g08"><b>图版 4 · 红纸竖招群</b><i>《姑苏繁华图》· 道前街府试段</i><span class="d">牌坊下满街红招：三元斋、状元糕、三场名笔</span><span class="p">P.08</span></a>
+  <a class="gr" href="#g11"><b>图版 5 · 青布小轿</b><i>《姑苏繁华图》· 沿河街市</i><span class="d">街心二人抬轿，两侧布行招林立，货担往来</span><span class="p">P.11</span></a>
+  <a class="gr" href="#g12"><b>图版 6 · 两层店铺夹竖招</b><i>《姑苏繁华图》· 街市段</i><span class="d">朱红竖招与旗幡相间，城墙柳色映在街尾</span><span class="p">P.12</span></a>
+  <a class="gr" href="#g14"><b>图版 7 · 转角短脊小顶</b><i>仇英《清明上河图》· 街角段</i><span class="d">转角另起短脊小顶，檐下一排敞开柜台</span><span class="p">P.14</span></a>
+  <a class="gr" href="#g16"><b>图版 8 · 绸缎铺店顾客休息区（长椅）</b><i>仇英《清明上河图》· 绸缎铺段</i><span class="d">蓝布凉棚下长椅列坐，柜台临街敞开</span><span class="p">P.16</span></a>
+</section>
+<div class="foot">
+  <a href="index.html">看电脑完整版 &rarr;</a>
+  <div>苏州阊门历史文化街区保护提升项目 · 阊门水关公园广场</div>
+  <div>阊门水关公园广场 · 廊亭构筑商业界面优化建议（精简讲述版）　2026.11.14</div>
+</div>
+<script>
+(function(){
+  var h=document.getElementById('hint'), x=document.getElementById('hx');
+  try{ if(localStorage.getItem('lt_hint')==='off'){ h.style.display='none'; } }catch(e){}
+  if(x){ x.addEventListener('click',function(){ h.style.display='none';
+    try{ localStorage.setItem('lt_hint','off'); }catch(e){} }); }
+})();
+</script>
+
+</body>
+</html>
